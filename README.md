@@ -9,12 +9,8 @@ Vinal Krush
 ## Features
 
 - Backup and archive specified files or folders.
-- Automatically skip symbolic links.
 - Configurable backup directory via `/etc/kback/kback.conf`.
 - List available backups.
-- Progress bar to monitor archiving process.
-- Ensures correct permissions on created archives.
-- Failsafe mechanisms to check for root privileges and validate configurations.
 
 ## Requirements
 
@@ -49,13 +45,15 @@ sudo ./install.sh
 
     This command will create a tar.gz archive of the specified file or folder in the configured backup directory.
 
-2. **List available backups:**
+3. **List available backups:**
 
     ```bash
     sudo kback -b
     ```
 
     This command will list all backups available in the configured backup directory.
+    ### Note
+    If you create backups and then change the backup directory, This command will only list backups in the new directory
 
 ### Configuration
 
