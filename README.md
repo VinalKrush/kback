@@ -75,6 +75,9 @@ backup_dir = /your/custom/backup/dir
 3. **Permissions:**
    The created archive will have read and write permissions for all users (rw-rw-rw-).
 
+4. **Progess Bar Freezes:**
+   On older or slower hardware, it may seem like the progress bar is frozen but I promise KBACK is still working.
+
 ## Example Configuration
 
 ```ini
