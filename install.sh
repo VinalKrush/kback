@@ -16,7 +16,11 @@ cp kback.py /usr/bin/kback
 chmod +x /usr/bin/kback
 
 # Making Config File
-mkdir /etc/kback
+# Check if the directory exists
+if [ ! -d "/etc/kback" ]; then
+  # Directory does not exist, create it
+  mkdir -p "/etc/kback"
+fi
 touch /etc/kback/kback.conf
 cp ./kback.config /etc/kback/kback.conf
 
