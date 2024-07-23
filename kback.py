@@ -105,6 +105,9 @@ def create_archive(source_path, backup_dir):
                         tar.add(file_path, arcname=os.path.relpath(file_path, source_path))
                         pbar.update(os.path.getsize(file_path))
 
+    # Change permissions of the archive to allow read and write for all users
+    os.chmod(archive_path, 0o666)  # 0o666 corresponds to rw-rw-rw-
+
     print(f"Backup successful! Archive created at: {archive_path}")
 
 # Function to list files in the backup directory
