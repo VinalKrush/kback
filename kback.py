@@ -84,7 +84,7 @@ def create_archive(source_path, backup_dir):
         if os.path.isfile(source_path):
             # Archive a single file
             if os.path.islink(source_path):
-                print(r"\e[1;91m    ==> ERROR: \e[4;31mKBACK Can't Archive Symbolic Links")
+                print(rf"\e[1;91m    ==> ERROR: \e[4;31mKBACK Can't Archive Symbolic Links")
                 sys.exit(7)
             file_size = os.path.getsize(source_path)
             with tqdm(total=file_size, unit='B', unit_scale=True, unit_divisor=1024, desc="Archiving") as pbar:
@@ -98,7 +98,7 @@ def create_archive(source_path, backup_dir):
                 for filename in filenames:
                     file_path = os.path.join(dirpath, filename)
                     if os.path.islink(file_path):
-                        print(r"\e[1;93m    ==> WARNING: \e[4;31mSkipping Symbolic Link: {file_path}")
+                        print(rf"\e[1;93m    ==> WARNING: \e[4;31mSkipping Symbolic Link: {file_path}")
                         continue
                     file_sizes.append(os.path.getsize(file_path))
                     total_size += os.path.getsize(file_path)
@@ -108,7 +108,7 @@ def create_archive(source_path, backup_dir):
                     for filename in filenames:
                         file_path = os.path.join(dirpath, filename)
                         if os.path.islink(file_path):
-                            print(r"\e[1;93m    ==> WARNING: \e[4;31mSkipping Symbolic Link: {file_path}")
+                            print(rf"\e[1;93m    ==> WARNING: \e[4;31mSkipping Symbolic Link: {file_path}")
                             continue
                         tar.add(file_path, arcname=os.path.relpath(file_path, source_path))
                         pbar.update(os.path.getsize(file_path))
