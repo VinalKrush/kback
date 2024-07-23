@@ -21,11 +21,33 @@ Vinal Krush
 ## Installation
 (Installing without the install script is not recommended)
 
+**Install Script:**
 ```bash
 git clone https://github.com/VinalKrush/kback.git
 cd kback
 sudo chmod +x ./install.sh
 sudo ./install.sh
+```
+
+**Manual Install**
+```bash
+# Git clone the repo
+git clone https://github.com/VinalKrush/kback.git
+cd kback
+```
+
+```bash
+# Move the script to /usr/bin
+sudo touch /usr/bin/kback
+sudo cp kback.py /usr/bin/kback
+sudo chmod +x /usr/bin/kback
+```
+
+```bash
+# Making config file
+sudo mkdir -p /etc/kback
+sudo touch /etc/kback/kback.conf
+sudo cp kback.conf /etc/kback/kback.conf
 ```
 
 ## Usage
@@ -52,7 +74,7 @@ sudo ./install.sh
     ```
 
     This command will list all backups available in the configured backup directory.
-    ### Note
+    **Note**
     If you create backups and then change the backup directory, This command will only list backups in the new directory
 
 ### Configuration
