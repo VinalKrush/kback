@@ -103,7 +103,10 @@ Would you like to create it? [Y/n]
 ```
 
 # Current Goals
+(Biggest goal is to become a all in one backup manager)
 
 1. Adding a restore command allowing users to restore backups to a specified directory
 
-2. Maybe in the future add a command-line option to not archive the backup so symlinks can be backed up
+2. Adding a delete command allowing users to delete backups
+
+3. Maybe in the future add a command-line option to not archive the backup so symlinks can be backed up
