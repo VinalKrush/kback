@@ -59,15 +59,14 @@ sudo cp kback.conf /etc/kback/kback.conf
 
 ### Examples
 
-1. **Backup a file or folder:**
+- **Backup a file or folder:**
 
     ```bash
     sudo kback /path/to/source
     ```
-
     This command will create a tar.gz archive of the specified file or folder in the configured backup directory.
 
-3. **List available backups:**
+- **List available backups:**
 
     ```bash
     sudo kback -b
@@ -88,16 +87,16 @@ backup_dir = /your/custom/backup/dir
 
 # Important Notes
 
-1. **Root Privileges:**
+- **Root Privileges:**
    The script requires root privileges to run. Ensure you execute it with sudo or as the root user.
    
-2. **Symbolic Links:**
+- **Symbolic Links:**
    The script automatically skips symbolic links during the backup process. (I have it do this because symlinks cannot be added to archives as it will return with an error)
    
-3. **Permissions:**
+- **Permissions:**
    The created archive will have read and write permissions for all users (rw-rw-rw-).
 
-4. **Progess Bar Freezes:**
+- **Progess Bar Freezes:**
    On older or slower hardware, it may seem like the progress bar is frozen but I promise KBACK is still working.
 
 ## Example Configuration
@@ -130,10 +129,10 @@ Would you like to create it? [Y/n]
 # Current Goals
 (Biggest goal is to become a all in one backup manager)
 
-1. Adding a restore command allowing users to restore backups to a specified directory
+- Adding a restore command allowing users to restore backups to a specified directory
 
-2. Adding a delete command allowing users to delete backups
+- Adding a delete command allowing users to delete backups
 
-3. Adding a uninstall script to make the uninstall process easy
+- Adding a uninstall script to make the uninstall process easy
 
-4. Maybe in the future add a command-line option to not archive the backup so symlinks can be backed up
+- Maybe in the future add a command-line option to not archive the backup so symlinks can be backed up
