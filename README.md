@@ -109,4 +109,6 @@ Would you like to create it? [Y/n]
 
 2. Adding a delete command allowing users to delete backups
 
-3. Maybe in the future add a command-line option to not archive the backup so symlinks can be backed up
+3. Adding a uninstall script to make the uninstall process easy
+
+4. Maybe in the future add a command-line option to not archive the backup so symlinks can be backed up
