@@ -74,27 +74,37 @@ def create_archive(source_path, backup_dir):
     archive_name = f"{base_name}_{timestamp}.tar.gz"
     archive_path = os.path.join(backup_dir, archive_name)
 
-    # Create the tar archive with progress bar
+    # Create the tar archive with a progress bar
     with tarfile.open(archive_path, "w:gz") as tar:
         if os.path.isfile(source_path):
             # Archive a single file
+            if os.path.islink(source_path):
+                print(f"Skipping symbolic link: {source_path}")
+                return
             file_size = os.path.getsize(source_path)
             with tqdm(total=file_size, unit='B', unit_scale=True, unit_divisor=1024, desc="Archiving") as pbar:
                 tar.add(source_path, arcname=os.path.basename(source_path))
                 pbar.update(file_size)
         else:
             # Archive a directory
+            total_size = 0
             file_sizes = []
             for dirpath, _, filenames in os.walk(source_path):
                 for filename in filenames:
                     file_path = os.path.join(dirpath, filename)
+                    if os.path.islink(file_path):
+                        print(f"Skipping symbolic link: {file_path}")
+                        continue
                     file_sizes.append(os.path.getsize(file_path))
+                    total_size += os.path.getsize(file_path)
 
-            total_size = sum(file_sizes)
             with tqdm(total=total_size, unit='B', unit_scale=True, unit_divisor=1024, desc="Archiving") as pbar:
                 for dirpath, _, filenames in os.walk(source_path):
                     for filename in filenames:
                         file_path = os.path.join(dirpath, filename)
+                        if os.path.islink(file_path):
+                            print(f"Skipping symbolic link: {file_path}")
+                            continue
                         tar.add(file_path, arcname=os.path.relpath(file_path, source_path))
                         pbar.update(os.path.getsize(file_path))
 
