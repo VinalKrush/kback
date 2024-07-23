@@ -28,7 +28,7 @@ def read_config():
             return backup_dir
         else:
             print("Exiting due to missing config file.")
-            sys.exit(1)
+            sys.exit(2)
     else:
         config = configparser.ConfigParser()
         try:
@@ -36,13 +36,13 @@ def read_config():
             backup_dir = config.get('Settings', 'backup_dir', fallback='/var/backups')
         except configparser.MissingSectionHeaderError:
             print(f"Error: The config file '{config_file}' is missing section headers.")
-            sys.exit(1)
+            sys.exit(3)
         except configparser.NoSectionError:
             print(f"Error: The config file '{config_file}' does not contain the '[Settings]' section.")
-            sys.exit(1)
+            sys.exit(4)
         except configparser.NoOptionError:
             print(f"Error: The config file '{config_file}' does not contain 'backup_dir' option.")
-            sys.exit(1)
+            sys.exit(5)
     
     return backup_dir
 
@@ -57,15 +57,20 @@ def ensure_backup_dir_exists(backup_dir):
                 print(f"Backup directory '{backup_dir}' created.")
             except Exception as e:
                 print(f"Failed to create backup directory: {e}")
-                sys.exit(1)
+                sys.exit(6)
         else:
             print("Backup directory was not created. Exiting.")
-            sys.exit(1)
+                
 
 # Function to create a tar archive of the specified file or folder with a progress bar
 def create_archive(source_path, backup_dir):
     if not os.path.exists(source_path):
         print(f"Error: The specified file or folder '{source_path}' does not exist.")
+        return
+
+    if os.path.abspath(source_path) == "/":
+        print("Error: You cannot backup the WHOLE system as this script is not intended for that.")
+        print("You can look into system backup packages like Timeshift.")
         return
 
     # Prepare the archive name with a timestamp
@@ -79,7 +84,8 @@ def create_archive(source_path, backup_dir):
         if os.path.isfile(source_path):
             # Archive a single file
             if os.path.islink(source_path):
-                return
+                print(f"\e[1;91m    ==> ERROR: \e[4;31mKBACK Can't Archive Symbolic Links")
+                sys.exit(7)
             file_size = os.path.getsize(source_path)
             with tqdm(total=file_size, unit='B', unit_scale=True, unit_divisor=1024, desc="Archiving") as pbar:
                 tar.add(source_path, arcname=os.path.basename(source_path))
@@ -92,6 +98,7 @@ def create_archive(source_path, backup_dir):
                 for filename in filenames:
                     file_path = os.path.join(dirpath, filename)
                     if os.path.islink(file_path):
+                        print(f"\e[1;93m    ==> WARNING: \e[4;31mSkipping Symbolic Link: {file_path}")
                         continue
                     file_sizes.append(os.path.getsize(file_path))
                     total_size += os.path.getsize(file_path)
@@ -101,6 +108,7 @@ def create_archive(source_path, backup_dir):
                     for filename in filenames:
                         file_path = os.path.join(dirpath, filename)
                         if os.path.islink(file_path):
+                            print(f"\e[1;93m    ==> WARNING: \e[4;31mSkipping Symbolic Link: {file_path}")
                             continue
                         tar.add(file_path, arcname=os.path.relpath(file_path, source_path))
                         pbar.update(os.path.getsize(file_path))
@@ -114,7 +122,7 @@ def create_archive(source_path, backup_dir):
 def list_backups(backup_dir):
     if not os.path.isdir(backup_dir):
         print(f"Error: The backup directory '{backup_dir}' does not exist.")
-        sys.exit(1)
+        sys.exit(8)
 
     backups = os.listdir(backup_dir)
     if not backups:
