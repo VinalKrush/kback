@@ -103,7 +103,6 @@ def create_archive(source_path, backup_dir):
                     for filename in filenames:
                         file_path = os.path.join(dirpath, filename)
                         if os.path.islink(file_path):
-                            print(f"Skipping symbolic link: {file_path}")
                             continue
                         tar.add(file_path, arcname=os.path.relpath(file_path, source_path))
                         pbar.update(os.path.getsize(file_path))
