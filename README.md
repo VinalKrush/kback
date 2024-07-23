@@ -72,7 +72,7 @@ backup_dir = /your/custom/backup/dir
    The script requires root privileges to run. Ensure you execute it with sudo or as the root user.
    
 2. **Symbolic Links:**
-   The script automatically skips symbolic links during the backup process.
+   The script automatically skips symbolic links during the backup process. (I have it do this because symlinks cannot be added to archives as it will return with an error)
    
 3. **Permissions:**
    The created archive will have read and write permissions for all users (rw-rw-rw-).
@@ -107,3 +107,5 @@ Would you like to create it? [Y/n]
 # Current Goals
 
 1. Adding a restore command allowing users to restore backups to a specified directory
+
+2. Maybe in the future add a command-line option to not archive the backup so symlinks can be backed up
