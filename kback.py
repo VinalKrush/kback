@@ -79,7 +79,6 @@ def create_archive(source_path, backup_dir):
         if os.path.isfile(source_path):
             # Archive a single file
             if os.path.islink(source_path):
-                print(f"Skipping symbolic link: {source_path}")
                 return
             file_size = os.path.getsize(source_path)
             with tqdm(total=file_size, unit='B', unit_scale=True, unit_divisor=1024, desc="Archiving") as pbar:
@@ -93,7 +92,6 @@ def create_archive(source_path, backup_dir):
                 for filename in filenames:
                     file_path = os.path.join(dirpath, filename)
                     if os.path.islink(file_path):
-                        print(f"Skipping symbolic link: {file_path}")
                         continue
                     file_sizes.append(os.path.getsize(file_path))
                     total_size += os.path.getsize(file_path)
