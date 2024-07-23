@@ -22,7 +22,7 @@ if [ ! -d "/etc/kback" ]; then
   mkdir -p "/etc/kback"
 fi
 touch /etc/kback/kback.conf
-cp ./kback/conf /etc/kback/kback.conf
+cp ./kback.conf /etc/kback/kback.conf
 
 
 # This will only show if it installed right (not much can really go wrong ngl)
